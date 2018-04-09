@@ -2,11 +2,13 @@
 using CommandLine.Text;
 using System;
 using System.Collections.Generic;
+using System.IO;
 using System.Linq;
 using System.Text;
 
 namespace CommandLineParserLibrary
 {
+
     class Options
     {
         [Option("voiceroid", HelpText = "読み上げ VOICEROID(Yukari, YukariEx, Aoi)", DefaultValue = "結月ゆかり")]
@@ -45,6 +47,8 @@ namespace CommandLineParserLibrary
 
     class Program
     {
+        static string[] DELIMITERS = { ".", "。", "\r\n", "\n" };
+
         static void Main(string[] args)
         {
             var options = new Options();
@@ -53,6 +57,56 @@ namespace CommandLineParserLibrary
             {
                 Environment.Exit(CommandLine.Parser.DefaultExitCodeFail);
             }
+
+            if (options.IsPrintList) {
+                // -l, --list オプションが指定されている場合、
+                // 使用可能 VOICEROID 一覧を表示する。
+                // TODO: 一覧表示処理
+                return;
+            }
+
+            // ファイル読み込み
+            System.Text.Encoding enc = System.Text.Encoding.GetEncoding("utf-8");
+            string text = System.IO.File.ReadAllText(options.InputFile, enc);
+
+            // 出力ファイルのベースを取得
+            string outputFileBase = Path.GetFileNameWithoutExtension(options.OutputFile);
+
+            // テキストを句点、改行で分割。
+            string[] splitedText = text.Split(DELIMITERS, System.StringSplitOptions.RemoveEmptyEntries);
+
+            // 音声保存 1 回分の文字列を記録するバッファを作成
+            System.Text.StringBuilder sb = new System.Text.StringBuilder();
+
+            // 大体 --split-size 文字毎にひとまとめにして音声保存していく。
+            short count= 1;
+            foreach (string sentence in splitedText) {
+                sb.Append(sentence);
+                sb.Append("。");
+
+                // 指定文字数を超える場合、
+                // 今までため込んでいたものを読み上げる。
+                // ただし、初回から超えていた場合はあきらめる。
+                if (sb.Length > options.SplitSize) {
+                    // ファイル名組み立て
+                    string fileName = String.Format("{0}_{1:D3}.wav", outputFileBase, count);
+                    count++;
+
+                    // TODO: 音声保存処理
+
+                    // sb リセット
+                    sb.Clear();
+                }
+            }
+
+            // 最後に残った文字列があれば音声保存
+            if (sb.Length > 0) {
+                // TODO: ファイル名組み立て
+                // TODO: 音声保存処理
+            }
+
+            return;
         }
     }
 }
+
