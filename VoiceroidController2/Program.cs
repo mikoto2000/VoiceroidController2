@@ -11,7 +11,7 @@ namespace CommandLineParserLibrary
 
     class Options
     {
-        [Option("voiceroid", HelpText = "読み上げ VOICEROID(Yukari, YukariEx, Aoi)", DefaultValue = "結月ゆかり")]
+        [Option("voiceroid", HelpText = "読み上げ VOICEROID 名", DefaultValue = "結月ゆかり")]
         public string Voiceroid { get; set; }
 
         [Option('o', "output-file", Required = true, HelpText = "出力ファイルパス")]
