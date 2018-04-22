@@ -5,6 +5,7 @@ using System.Collections.Generic;
 using System.IO;
 using System.Linq;
 using System.Text;
+using Speech;
 
 namespace CommandLineParserLibrary
 {
@@ -61,9 +62,24 @@ namespace CommandLineParserLibrary
             if (options.IsPrintList) {
                 // -l, --list オプションが指定されている場合、
                 // 使用可能 VOICEROID 一覧を表示する。
-                // TODO: 一覧表示処理
+                var engines = SpeechController.GetVoiceroid2SpeechEngine();
+                foreach (var c in engines)
+                {
+                    Console.WriteLine($"{c.LibraryName},{c.EngineName},{c.EnginePath}");
+                }
                 return;
             }
+
+
+            // Voiceroid2Engine 作成
+            var engine = SpeechController.GetVoiceroid2Instance(options.Voiceroid);
+            if (engine == null)
+            {
+                Console.WriteLine($"{options.Voiceroid} を起動できませんでした。");
+                Console.ReadKey();
+                return;
+            }
+            engine.Activate();
 
             // ファイル読み込み
             System.Text.Encoding enc = System.Text.Encoding.GetEncoding("utf-8");
@@ -91,8 +107,8 @@ namespace CommandLineParserLibrary
                     // ファイル名組み立て
                     string fileName = String.Format("{0}_{1:D3}.wav", outputFileBase, count);
                     count++;
-
-                    // TODO: 音声保存処理
+                    
+                    engine.Save(fileName, sb.ToString());
 
                     // sb リセット
                     sb.Clear();
@@ -100,9 +116,11 @@ namespace CommandLineParserLibrary
             }
 
             // 最後に残った文字列があれば音声保存
-            if (sb.Length > 0) {
-                // TODO: ファイル名組み立て
-                // TODO: 音声保存処理
+            if (sb.Length > 0)
+            {
+                // ファイル名組み立て
+                string fileName = String.Format("{0}_{1:D3}.wav", outputFileBase, count);
+                engine.Save(fileName, sb.ToString());
             }
 
             return;
