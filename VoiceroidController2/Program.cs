@@ -15,10 +15,10 @@ namespace CommandLineParserLibrary
         [Option("voiceroid", HelpText = "読み上げ VOICEROID 名", DefaultValue = "結月ゆかり")]
         public string Voiceroid { get; set; }
 
-        [Option('o', "output-file", Required = true, HelpText = "出力ファイルパス")]
+        [Option('o', "output-file", HelpText = "出力ファイルパス")]
         public string OutputFile { get; set; }
 
-        [Option('i', "input-file", Required = true, HelpText = "入力ファイルパス")]
+        [Option('i', "input-file", HelpText = "入力ファイルパス")]
         public string InputFile { get; set; }
 
         [Option('l', "list", HelpText = "読み上げ可能 VOICEROID 名一覧表示")]
@@ -70,6 +70,18 @@ namespace CommandLineParserLibrary
                 return;
             }
 
+            // 入力ファイル、出力ファイルの指定確認
+            if (options.InputFile == null)
+            {
+                Console.Error.WriteLine("入力ファイルパス(--input-file)は必須です。");
+                Environment.Exit(CommandLine.Parser.DefaultExitCodeFail);
+            }
+
+            if (options.OutputFile == null)
+            {
+                Console.Error.WriteLine("出力ファイルパス(--output-file)は必須です。");
+                Environment.Exit(CommandLine.Parser.DefaultExitCodeFail);
+            }
 
             // Voiceroid2Engine 作成
             var engine = SpeechController.GetVoiceroid2Instance(options.Voiceroid);
@@ -86,7 +98,8 @@ namespace CommandLineParserLibrary
             string text = System.IO.File.ReadAllText(options.InputFile, enc);
 
             // 出力ファイルのベースを取得
-            string outputFileBase = Path.GetFileNameWithoutExtension(options.OutputFile);
+            string outputDir = Path.GetDirectoryName(options.OutputFile);
+            string outputFileBase = outputDir + "\\" + Path.GetFileNameWithoutExtension(options.OutputFile);
 
             // テキストを句点、改行で分割。
             string[] splitedText = text.Split(DELIMITERS, System.StringSplitOptions.RemoveEmptyEntries);
