@@ -1,0 +1,3 @@
+[submodule "TTSController"]
+	path = TTSController
+	url = https://github.com/mikoto2000/TTSController

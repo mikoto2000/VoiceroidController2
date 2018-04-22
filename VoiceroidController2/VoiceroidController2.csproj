@@ -57,6 +57,12 @@
   <ItemGroup>
     <Content Include="test\test.txt" />
   </ItemGroup>
+  <ItemGroup>
+    <ProjectReference Include="..\TTSController\src\Speech\Speech.csproj">
+      <Project>{7787a468-a1bb-4077-85bc-543258610060}</Project>
+      <Name>Speech</Name>
+    </ProjectReference>
+  </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
   <!-- To modify your build process, add your task inside one of the targets below and uncomment it. 
        Other similar extension points exist, see Microsoft.Common.targets.
