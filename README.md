@@ -15,7 +15,7 @@ Usage:
 ```bat
 Usage: VoiceroidController2.exe [options]
 オプション:
-  --Voiceroid          (Default: 結月ゆかり) 読み上げ VOICEROID 名
+  --voiceroid          (Default: 結月ゆかり) 読み上げ VOICEROID 名
   -o, --output-file    Required. 出力ファイルパス
   -i, --input-file     Required. 入力ファイルパス
   -l, --list           読み上げ可能 VOICEROID 名一覧表示
@@ -38,7 +38,7 @@ Usage: VoiceroidController2.exe [options]
 rem 「VOICEROID2 結月ゆかり」で音声保存する。
 rem 「文字列ファイル.txt」を「OUTPUT_FILE_xxx.wav」に保存(xxx は 000 からの連番)
 rem 1 ファイル毎の読み上げ文字列が 100 文字を超えないように分割してファイル出力する
-VoiceroidController2.exe --Voiceroid 結月ゆかり --split-size 100 -i 文字列ファイル.txt -o OUTPUT_FILE.wav
+VoiceroidController2.exe --voiceroid 結月ゆかり --split-size 100 -i 文字列ファイル.txt -o OUTPUT_FILE.wav
 ```
 
 build:
