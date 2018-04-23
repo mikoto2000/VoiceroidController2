@@ -59,6 +59,12 @@ namespace CommandLineParserLibrary
                 Environment.Exit(CommandLine.Parser.DefaultExitCodeFail);
             }
 
+            if (args.Length == 0)
+            {
+                Console.Error.WriteLine(options.GetUsage());
+                Environment.Exit(CommandLine.Parser.DefaultExitCodeFail);
+            }
+
             if (options.IsPrintList) {
                 // -l, --list オプションが指定されている場合、
                 // 使用可能 VOICEROID 一覧を表示する。
@@ -74,12 +80,14 @@ namespace CommandLineParserLibrary
             if (options.InputFile == null)
             {
                 Console.Error.WriteLine("入力ファイルパス(--input-file)は必須です。");
+                Console.Error.WriteLine(options.GetUsage());
                 Environment.Exit(CommandLine.Parser.DefaultExitCodeFail);
             }
 
             if (options.OutputFile == null)
             {
                 Console.Error.WriteLine("出力ファイルパス(--output-file)は必須です。");
+                Console.Error.WriteLine(options.GetUsage());
                 Environment.Exit(CommandLine.Parser.DefaultExitCodeFail);
             }
 
