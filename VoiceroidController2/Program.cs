@@ -48,7 +48,8 @@ namespace CommandLineParserLibrary
 
     class Program
     {
-        static string[] DELIMITERS = { ".", "。", "\r\n", "\n" };
+        static string[] DELIMITERS = { ".", "。" };
+        static string[] DELETE_CHARS = { "\r\n", "\n" };
 
         static void Main(string[] args)
         {
@@ -109,7 +110,12 @@ namespace CommandLineParserLibrary
             string outputDir = Path.GetDirectoryName(options.OutputFile);
             string outputFileBase = outputDir + "\\" + Path.GetFileNameWithoutExtension(options.OutputFile);
 
-            // テキストを句点、改行で分割。
+            // テキストの、改行を削除。
+            foreach (string delete_char in DELETE_CHARS) {
+                text = text.Replace(delete_char, "");
+            }
+
+            // テキストを句点で分割。
             string[] splitedText = text.Split(DELIMITERS, System.StringSplitOptions.RemoveEmptyEntries);
 
             // 音声保存 1 回分の文字列を記録するバッファを作成
