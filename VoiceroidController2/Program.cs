@@ -108,7 +108,13 @@ namespace CommandLineParserLibrary
 
             // 出力ファイルのベースを取得
             string outputDir = Path.GetDirectoryName(options.OutputFile);
-            string outputFileBase = outputDir + "\\" + Path.GetFileNameWithoutExtension(options.OutputFile);
+
+            // 出力ファイルのベースパスが空の場合、 './' が省略されたものとみなす
+            if (string.IsNullOrEmpty(outputDir)) {
+                outputDir = ".";
+            }
+            string outputDirFullPath = System.IO.Path.GetFullPath(outputDir);
+            string outputFileBase = outputDirFullPath + "\\" + Path.GetFileNameWithoutExtension(options.OutputFile);
 
             // テキストの、改行を削除。
             foreach (string delete_char in DELETE_CHARS) {
