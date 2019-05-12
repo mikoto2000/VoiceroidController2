@@ -140,8 +140,10 @@ namespace CommandLineParserLibrary
                     // ファイル名組み立て
                     string fileName = String.Format("{0}_{1:D3}.wav", outputFileBase, count);
                     count++;
-                    
-                    engine.Save(fileName, sb.ToString());
+
+                    string tmp = sb.ToString().Normalize(NormalizationForm.FormKC);
+
+                    engine.Save(fileName, tmp);
 
                     // sb リセット
                     sb.Clear();
