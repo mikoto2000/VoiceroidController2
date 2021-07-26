@@ -9,9 +9,10 @@
     <AppDesignerFolder>Properties</AppDesignerFolder>
     <RootNamespace>VoiceroidController2</RootNamespace>
     <AssemblyName>VoiceroidController2</AssemblyName>
-    <TargetFrameworkVersion>v4.5.2</TargetFrameworkVersion>
+    <TargetFrameworkVersion>v4.6.1</TargetFrameworkVersion>
     <FileAlignment>512</FileAlignment>
     <AutoGenerateBindingRedirects>true</AutoGenerateBindingRedirects>
+    <TargetFrameworkProfile />
   </PropertyGroup>
   <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Debug|AnyCPU' ">
     <PlatformTarget>AnyCPU</PlatformTarget>
@@ -59,7 +60,7 @@
   </ItemGroup>
   <ItemGroup>
     <ProjectReference Include="..\TTSController\src\Speech\Speech.csproj">
-      <Project>{7787a468-a1bb-4077-85bc-543258610060}</Project>
+      <Project>{7787A468-A1BB-4077-85BC-543258610060}</Project>
       <Name>Speech</Name>
     </ProjectReference>
   </ItemGroup>
