@@ -27,6 +27,9 @@ namespace CommandLineParserLibrary
         [Option("split-size", HelpText = "読み上げ文字列を分割する目安のサイズ", DefaultValue = 2000)]
         public int SplitSize { get; set; }
 
+        [Option("linebreak-to-period", HelpText = "改行を句点に置換")]
+        public bool IsLinebreakToPeriod { get; set; }
+
         [HelpOption(HelpText= "ヘルプを表示")]
         public string GetUsage()
         {
@@ -42,6 +45,7 @@ namespace CommandLineParserLibrary
     InputFile: {this.InputFile},
     IsPrintList: {this.IsPrintList},
     SplitSize: {this.SplitSize},
+    IsLinebreakToPeriod: {this.IsLinebreakToPeriod},
 }}";
         }
     }
@@ -116,9 +120,21 @@ namespace CommandLineParserLibrary
             string outputDirFullPath = System.IO.Path.GetFullPath(outputDir);
             string outputFileBase = outputDirFullPath + "\\" + Path.GetFileNameWithoutExtension(options.OutputFile);
 
-            // テキストの、改行を削除。
-            foreach (string delete_char in DELETE_CHARS) {
-                text = text.Replace(delete_char, "");
+            // 改行処理
+            string replaceString;
+            if (options.IsLinebreakToPeriod)
+            {
+                replaceString = "。";
+            }
+            else
+            {
+                replaceString = "";
+            }
+
+            // 改行を句点に置換
+            foreach (string delete_char in DELETE_CHARS)
+            {
+                text = text.Replace(delete_char, replaceString);
             }
 
             // テキストを句点で分割。

@@ -15,21 +15,23 @@ Usage:
 ```bat
 Usage: VoiceroidController2.exe [options]
 オプション:
-  --voiceroid          (Default: 結月ゆかり) 読み上げ VOICEROID 名
-  -o, --output-file    Required. 出力ファイルパス
-  -i, --input-file     Required. 入力ファイルパス
-  -l, --list           読み上げ可能 VOICEROID 名一覧表示
-  --split-size         (Default: 2000) 読み上げ文字列を分割する目安のサイズ
-  --help               ヘルプを表示
+  --voiceroid              (Default: 結月ゆかり) 読み上げ VOICEROID 名
+  -o, --output-file        出力ファイルパス
+  -i, --input-file         入力ファイルパス
+  -l, --list               読み上げ可能 VOICEROID 名一覧表示
+  --split-size             (Default: 2000) 読み上げ文字列を分割する目安のサイズ
+  --linebrake-to-period    改行を句点に置換
+  --help                   ヘルプを表示
 ```
 
-| オプション | 説明 |
-|:-----------|:-----|
-| Voicerid   | 読み上げ VOICEROID 名。 |
-| output-file| 出力先ファイルパス。</br>ファイル名末尾に `_000` のように連番が挿入される。</br>指定した拡張子は無視され、 `wav` で保存される。 |
-| input-file | 入力ファイルパス</br>UTF-8 で書かれたテキストファイル。 |
-| list       | 読み上げ可能 VOICEROID 名一覧表示。 |
-| split-size | 読み上げ文字列を分割する目安のサイズ。</br>大体この文字数毎に音声ファイルが出力される。 |
+| オプション          | 説明 |
+|:--------------------|:-----|
+| Voicerid            | 読み上げ VOICEROID 名。 |
+| output-file         | 出力先ファイルパス。</br>ファイル名末尾に `_000` のように連番が挿入される。</br>指定した拡張子は無視され、 `wav` で保存される。 |
+| input-file          | 入力ファイルパス</br>UTF-8 で書かれたテキストファイル。 |
+| list                | 読み上げ可能 VOICEROID 名一覧表示。 |
+| split-size          | 読み上げ文字列を分割する目安のサイズ。</br>大体この文字数毎に音声ファイルが出力される。 |
+| linebrake-to-period | 文章中の改行を句点に置換するフラグ。<br/>連続した句点はひとつにまとめられる。 |
 
 
 下記のような使い方を想定しています。
@@ -74,7 +76,7 @@ VoiceroidController のように音声再生はできないので注意してく
 License:
 --------
 
-Copyright (C) 2018 mikoto2000
+Copyright (C) 2018-2021 mikoto2000
 
 This software is released under the Apache 2.0 License, see LICENSE
 
