@@ -20,6 +20,9 @@ namespace CommandLineParserLibrary
         [Option('i', "input-file", HelpText = "入力ファイルパス")]
         public string InputFile { get; set; }
 
+        [Option('t', "text", HelpText = "読み上げテキスト")]
+        public string Text { get; set; }
+
         [Option('l', "list", HelpText = "読み上げ可能 VOICEROID 名一覧表示")]
         public bool IsPrintList { get; set; }
 
@@ -45,6 +48,7 @@ namespace CommandLineParserLibrary
     Voiceroid: {this.Voiceroid},
     OutputFile: {this.OutputFile},
     InputFile: {this.InputFile},
+    Text: {this.Text},
     IsPrintList: {this.IsPrintList},
     SplitSize: {this.SplitSize},
     IsLinebreakToPeriod: {this.IsLinebreakToPeriod},
@@ -83,9 +87,9 @@ namespace CommandLineParserLibrary
                 return;
             }
 
-            if (options.InputFile == null)
+            if (string.IsNullOrEmpty(options.Text) && options.InputFile == null)
             {
-                Console.Error.WriteLine("入力ファイルパス(--input-file)は必須です。");
+                Console.Error.WriteLine("入力テキスト(--text) または 入力ファイルパス(--input-file)は必須です。");
                 Console.Error.WriteLine(options.GetUsage());
                 Environment.Exit(CommandLine.Parser.DefaultExitCodeFail);
             }
@@ -106,8 +110,16 @@ namespace CommandLineParserLibrary
             }
             engine.Activate();
 
-            Encoding enc = Encoding.GetEncoding("utf-8");
-            string text = File.ReadAllText(options.InputFile, enc);
+            string text;
+            if (!string.IsNullOrEmpty(options.Text))
+            {
+                text = options.Text;
+            }
+            else
+            {
+                Encoding enc = Encoding.GetEncoding("utf-8");
+                text = File.ReadAllText(options.InputFile, enc);
+            }
 
             string outputFileBase = null;
             if (!string.IsNullOrEmpty(options.OutputFile))
