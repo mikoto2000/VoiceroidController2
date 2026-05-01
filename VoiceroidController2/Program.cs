@@ -169,9 +169,10 @@ namespace CommandLineParserLibrary
                     {
                         foreach (string chunk in chunks)
                         {
+                            finishedEvent.Reset();
                             engine.Play(chunk);
+                            finishedEvent.Wait();
                         }
-                        finishedEvent.Wait();
                     }
                     finally
                     {
